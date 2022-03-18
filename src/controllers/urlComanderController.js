@@ -32,6 +32,7 @@ export async function createShortUrl (req, res) {
         `, [userId, url, shortUrl, 0]);
         res.sendStatus(201);
     } catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
 }
@@ -55,6 +56,7 @@ export async function getUrls(req, res) {
 
         res.sendStatus(200).send(result.rows[0]);
     } catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
 }
@@ -76,7 +78,7 @@ export async function deleteUrl(req, res){
 
         const existentUrlFromUser = await connection.query(`
             SELECT * FROM urls 
-            WHERE "userId"= $1, id=$2;
+            WHERE "userId"= $1 AND id=$2;
         `, [userId, id]);
         if(existentUrlFromUser.rowCount === 0){
             return res.sendStatus(401);
@@ -87,6 +89,7 @@ export async function deleteUrl(req, res){
         `, [id]);
         res.sendStatus(204);
     } catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
 }
