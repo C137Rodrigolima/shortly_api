@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createShortUrl, deleteUrl, getUrls } from "../controllers/urlComanderController";
-import { validateTokenMiddleware } from "../middlewares/validateTokenMiddleware";
+import { createShortUrl, deleteUrl, getUrls } from "../controllers/urlComanderController.js";
+import { validateTokenMiddleware } from "../middlewares/validateTokenMiddleware.js";
 
 const urlComanderRouter = Router();
 

@@ -41,18 +41,18 @@ export async function getUrls(req, res) {
 
     try {
         const result = await connection.query(`
-            SELECT urls.id, urls."shortUrl", urls.url FROM urls
-            WHERE urls.id = $1;
+            SELECT urls.id, urls."shortUrl", urls.url
+                FROM urls
+            WHERE id = $1;
         `, [id]);
         if(result.rowCount === 0){
             return res.sendStatus(404);
         }
 
-        const incrementVisit = result.rows[0].visitCount++;
-
         await connection.query(`
-            UPDATE urls SET "visitCount"=$1 WHERE urls.id=$2;
-        `, [incrementVisit, id]);
+            UPDATE urls SET "visitCount"=urls."visitCount"+1 WHERE id=$1;
+        `, [id]);
+
         res.sendStatus(200).send(result.rows[0]);
     } catch (error) {
         res.sendStatus(500);
